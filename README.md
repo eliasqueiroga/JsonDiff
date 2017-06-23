@@ -1,2 +1,2 @@
-# JsonDiff
-A small and simple json comparator project
+# JSONDIFF
+A simple web service to compare json structures without complexity.
