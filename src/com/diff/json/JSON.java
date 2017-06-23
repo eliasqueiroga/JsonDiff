@@ -4,7 +4,10 @@ public class JSON {
 	
 	private String json;
 	
-	public static JSON parse(String stringFormat){
+	public static JSON parse(String stringFormat) throws InvalidJsonFormatException{
+		if (!stringFormat.startsWith("{") && !stringFormat.endsWith("}")){
+			throw new InvalidJsonFormatException();
+		}
 		return new JSON(stringFormat.replaceAll("\\s*", ""));
 	}
 	
@@ -23,5 +26,10 @@ public class JSON {
 		}else{
 			return false;
 		}	
+	}
+	
+	@Override
+	public String toString() {
+		return this.json;
 	}
 }

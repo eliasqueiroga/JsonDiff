@@ -1,16 +1,23 @@
 package com.diff.controllers;
 
 import com.diff.json.DiffResult;
+import com.diff.json.InvalidJsonFormatException;
 import com.diff.json.JSON;
 import com.diff.json.JSONDiff;
 
 import lef.server.services.Cache;
 
+/**
+ * 
+ * 
+ * @author elias
+ *
+ */
 public class Controller {
 	
 	Cache cache = Cache.instance();
 	
-	private JSONDiff getJsonDiff(String diffID){
+	JSONDiff getJsonDiff(String diffID){
 		JSONDiff jsonDiff;
 		if (cache.has(diffID)){
 			jsonDiff = (JSONDiff)cache.get(diffID);			
@@ -22,13 +29,13 @@ public class Controller {
 		return jsonDiff;
 	}
 	
-	public void setLeftSide(String diffID, String json){
+	public void setLeftSide(String diffID, String json) throws InvalidJsonFormatException{
 		JSONDiff jsonDiff = getJsonDiff(diffID); 
 		
 		jsonDiff.setLeft(JSON.parse(json));
 	}
 	
-	public void setRightSide(String diffID, String json){
+	public void setRightSide(String diffID, String json) throws InvalidJsonFormatException{
 		JSONDiff jsonDiff = getJsonDiff(diffID); 
 		
 		jsonDiff.setRight(JSON.parse(json));
@@ -41,11 +48,6 @@ public class Controller {
 		}else{
 			return new DiffResult("Error", "The ID " + diffID + " is not mapped");
 		}
-		
-		
-		 
-		
-		
 	}
 
 }

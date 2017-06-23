@@ -36,10 +36,8 @@ public class DiffEndpoint {
 	 * @return A default message saying the json was set to be compared.
 	 */
 	@Path(name="/:id/left", method=Path.Method.POST)
-	public String setLeft(@PathParam("id") String id, @FormParam("json") String json){
+	public void setLeft(@PathParam("id") String id, @FormParam("json") String json) throws Exception{
 		diffController.setLeftSide(id, json);
-		
-		return "OK";
 	}
 	
 	/**
@@ -50,10 +48,8 @@ public class DiffEndpoint {
 	 * @return A default message saying the json was set to be compared.
 	 */	
 	@Path(name="/:id/:right", method=Path.Method.POST)
-	public String setright(@PathParam("id") String id, @FormParam("json") String json){
+	public void setright(@PathParam("id") String id, @FormParam("json") String json) throws Exception{
 		diffController.setRightSide(id, json);
-		
-		return "OK";
 	}
 
 	/**
