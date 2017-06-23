@@ -1,9 +1,0 @@
-package com.diff.server.annotations;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PathParam {	
-	public String value();
-}
