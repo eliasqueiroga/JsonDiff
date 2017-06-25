@@ -32,7 +32,7 @@ public class JSONDiffTest {
 
 		DiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), "Both sides are equal");
+		assertEquals(result.getStatus(), DiffResult.Status.EQUALS);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class JSONDiffTest {
 
 		DiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), "Both sides are not equal");
+		assertEquals(result.getStatus(), DiffResult.Status.NOT_EQUALS);
 	}
 
 	/**
@@ -83,16 +83,14 @@ public class JSONDiffTest {
 
 		DiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), "Both sides must be informed to be compared");
-		assertEquals(result.getDetail(), "Right side must be informed");
+		assertEquals(result.getStatus(), DiffResult.Status.MISSING_RIGHT_SIDE);
 
 		jsonDiff.setLeft(null);
 		jsonDiff.setRight(parsedJson2);
 
 		DiffResult result2 = jsonDiff.compare();
 
-		assertEquals(result2.getStatus(), "Both sides must be informed to be compared");
-		assertEquals(result2.getDetail(), "Left side must be informed");
+		assertEquals(result2.getStatus(), DiffResult.Status.MISSING_LEFT_SIDE);
 
 	}
 

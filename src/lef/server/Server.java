@@ -12,6 +12,7 @@ import java.util.Set;
 import com.diff.controllers.Controller;
 import com.google.gson.Gson;
 
+import lef.server.exception.BadRequestException;
 import lef.server.exception.EndpointInternalException;
 import lef.server.exception.EndpointMappingNotFoundException;
 import lef.server.exception.EndpointNotFoundException;
@@ -71,13 +72,18 @@ public class Server {
 		
 		exception(EndpointInternalException.class, (e, req, res) -> {
 		    res.status(500);
-		    res.body(e.getMessage());
+		    res.body(EndpointResult.ERROR(e.getMessage()).toString());
 		});
 		
 		exception(EndpointMappingNotFoundException.class, (e, req, res) -> {
 		    res.status(404);
 		    res.body(EndpointResult.ENDPOINT_MAPPING_NOT_FOUND().toString());
 		});
+		
+		exception(BadRequestException.class, (e, req, res) -> {
+		    res.status(400);
+		    res.body(EndpointResult.ERROR(e.getMessage()).toString());
+		});		
 		
 		
 		

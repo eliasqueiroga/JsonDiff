@@ -5,8 +5,12 @@ public class JSON {
 	private String json;
 	
 	public static JSON parse(String stringFormat) throws InvalidJsonFormatException{
-		if (!stringFormat.startsWith("{") && !stringFormat.endsWith("}")){
-			throw new InvalidJsonFormatException();
+		if (stringFormat != null){
+			if (!stringFormat.startsWith("{") || !stringFormat.endsWith("}")){
+				throw new InvalidJsonFormatException("The json informed is invalid format");
+			}
+		}else{
+			throw new InvalidJsonFormatException("The json informed is invalid format");
 		}
 		return new JSON(stringFormat.replaceAll("\\s*", ""));
 	}

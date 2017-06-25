@@ -46,7 +46,7 @@ public class Controller {
 			JSONDiff jsonDiff = getJsonDiff(diffID);
 			return jsonDiff.compare();
 		}else{
-			return new DiffResult("Error", "The ID " + diffID + " is not mapped");
+			return new DiffResult(DiffResult.Status.MISSING_BOTH_SIDES, "The ID " + diffID + " is not mapped");
 		}
 	}
 

@@ -17,6 +17,7 @@ import lef.server.annotations.Endpoint;
 import lef.server.annotations.FormParam;
 import lef.server.annotations.Path;
 import lef.server.annotations.PathParam;
+import lef.server.exception.BadRequestException;
 import lef.server.exception.EndpointInternalException;
 import lef.server.exception.EndpointMappingNotFoundException;
 import lef.server.exception.EndpointNotFoundException;
@@ -30,11 +31,8 @@ public class Dispacher {
 
 			if (endpointClass != null) {
 				Object result = null;
-				try {
-					result = runEndpoint(endpointClass, endpointMetaInfo);
-				} catch (Exception e) {
-					throw new EndpointNotFoundException();
-				}
+				result = runEndpoint(endpointClass, endpointMetaInfo);
+
 				if (result != null) {
 					return EndpointResult.OK(result);
 				} else {
@@ -88,7 +86,7 @@ public class Dispacher {
 	}
 
 	private Object runEndpoint(Class endpointclass, EndpointMetaInfo endpointMetaInfo)
-			throws EndpointNotFoundException, EndpointInternalException {
+			throws EndpointNotFoundException, EndpointInternalException, BadRequestException {
 		Method[] allMethods = endpointclass.getMethods();
 
 		for (Method method : allMethods) {
@@ -107,7 +105,11 @@ public class Dispacher {
 
 						return method.invoke(classInstance, parameters);
 					} catch (Exception e) {
-						throw new EndpointInternalException(e.getCause().getMessage());
+						if (e instanceof BadRequestException){
+							throw new BadRequestException(e.getCause().getMessage());	
+						}else{
+							throw new EndpointInternalException(e.getCause().getMessage());
+						}						
 					}
 				}
 			}

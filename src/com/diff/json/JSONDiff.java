@@ -4,7 +4,7 @@ public class JSONDiff {
 
 	private JSON left;
 	private JSON right;
-
+	
 	public JSONDiff() {
 
 	}
@@ -18,16 +18,19 @@ public class JSONDiff {
 	}
 
 	public DiffResult compare() {
-		if (left == null || right == null) {
-			return new DiffResult("Both sides must be informed to be compared",
-					(left == null ? "Left" : "Right") + " side must be informed");
-		} else {
+		if (left == null && right == null) {
+			return new DiffResult(DiffResult.Status.MISSING_BOTH_SIDES, null);
+		} else if (left != null && right == null) {
+			return new DiffResult(DiffResult.Status.MISSING_RIGHT_SIDE, null);
+		} else if (left == null && right != null) {
+			return new DiffResult(DiffResult.Status.MISSING_LEFT_SIDE, null);
+		}else {
 			Boolean isEqual = left.equals(right);
 
 			if (isEqual) {
-				return new DiffResult("Both sides are equal", null);
+				return new DiffResult(DiffResult.Status.EQUALS, null);
 			} else {
-				return new DiffResult("Both sides are not equal", "position 1");
+				return new DiffResult(DiffResult.Status.NOT_EQUALS, "position 1");
 			}
 		}
 	}

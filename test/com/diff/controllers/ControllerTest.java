@@ -32,7 +32,7 @@ public class ControllerTest {
 		}
 		DiffResult result = controller.compare(diffID);
 
-		assertEquals(result.getStatus(), "Both sides are equal");
+		assertEquals(result.getStatus(), DiffResult.Status.EQUALS);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class ControllerTest {
 		}
 		DiffResult result = controller.compare(diffID);
 
-		assertEquals(result.getStatus(), "Both sides are not equal");
+		assertEquals(result.getStatus(), DiffResult.Status.NOT_EQUALS);
 	}
 
 	/**
@@ -78,9 +78,7 @@ public class ControllerTest {
 
 		DiffResult result = diff.compare();
 
-		assertEquals(result.getStatus(), "Both sides must be informed to be compared");
-
-		assertEquals(result.getDetail(), "Right side must be informed");
+		assertEquals(result.getStatus(), DiffResult.Status.MISSING_RIGHT_SIDE);
 	}
 
 	/**
@@ -97,9 +95,7 @@ public class ControllerTest {
 
 		DiffResult result = diff.compare();
 
-		assertEquals(result.getStatus(), "Both sides must be informed to be compared");
-
-		assertEquals(result.getDetail(), "Left side must be informed");
+		assertEquals(result.getStatus(), DiffResult.Status.MISSING_BOTH_SIDES);
 	}
 
 }
