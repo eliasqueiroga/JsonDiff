@@ -2,10 +2,26 @@ package com.diff.json;
 
 import com.diff.util.Util;
 
+/**
+ * This class represents a binary json format. Basically, it receives a json data
+ * in binary format in the constructor method that makes a initial verification if
+ * the binary represents a json data. 
+ * 
+ * The equals method is implemented comparing if the size is equal.
+ * 
+ * @author Elias
+ *
+ */
 public class BinaryJSON {
 	
 	private byte[] json;
 		
+	/**
+	 * Constructor method that receives a json content in binary format.
+	 * 
+	 * @param binaryJson 
+	 * @throws InvalidJsonFormatException
+	 */
 	public BinaryJSON(byte[] binaryJson) throws InvalidJsonFormatException{
 		this.json = binaryJson;
 		
@@ -14,6 +30,9 @@ public class BinaryJSON {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj != null){

@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.diff.JsonUtil;
-import com.diff.json.DiffResult;
+import com.diff.json.JSONDiffResult;
 import com.diff.util.Util;
 
 import lef.server.exception.BadRequestException;
@@ -36,9 +36,9 @@ public class EndpointTest {
 			fail("Invalid json format");
 		}
 
-		DiffResult result = endpoint.getComparisonResult(diffID);
+		JSONDiffResult result = endpoint.getComparisonResult(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.SIZE_EQUAL);
 	}
 
 	/**
@@ -58,9 +58,9 @@ public class EndpointTest {
 			fail("Invalid json format");
 		}
 
-		DiffResult result = endpoint.getComparisonResult(diffID);
+		JSONDiffResult result = endpoint.getComparisonResult(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.NOT_SIZE_EQUALS);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.NOT_SIZE_EQUAL);
 	}
 
 	/**
@@ -71,9 +71,9 @@ public class EndpointTest {
 		String diffID = "ID_" + new Random().nextLong();
 		String[] jsons = JsonUtil.getJsons(false, false, true);
 
-		DiffResult result = endpoint.getComparisonResult(diffID);
+		JSONDiffResult result = endpoint.getComparisonResult(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.MISSING_BOTH_SIDES);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_BOTH_SIDES);
 	}
 
 	/**
@@ -125,9 +125,9 @@ public class EndpointTest {
 			}
 		}
 
-		DiffResult result = endpoint.getComparisonResult(diffID);
+		JSONDiffResult result = endpoint.getComparisonResult(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.MISSING_BOTH_SIDES);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_BOTH_SIDES);
 	}
 
 	/**
@@ -145,9 +145,9 @@ public class EndpointTest {
 			fail();
 		}
 
-		DiffResult result = endpoint.getComparisonResult(diffID);
+		JSONDiffResult result = endpoint.getComparisonResult(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.MISSING_RIGHT_SIDE);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_RIGHT_SIDE);
 	}
 
 	/**

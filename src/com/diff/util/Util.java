@@ -26,7 +26,7 @@ public class Util {
 	/**
 	 * Decode a string in base64 format to a text format.
 	 * 
-	 * @param binaryData String encoded in base64 format.
+	 * @param binaryData Data in base64 format.
 	 * @return text in String utf8 format.
 	 */
 	public static String base64Decoder(byte[] binaryData) {

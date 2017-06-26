@@ -1,16 +1,19 @@
 package com.diff.jsons;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.diff.json.BinaryJSON;
 import com.diff.json.InvalidJsonFormatException;
 import com.diff.util.Util;
-import com.sun.mail.iap.ByteArray;
-import com.diff.json.BinaryJSON;
 
 public class JSONTest {
 

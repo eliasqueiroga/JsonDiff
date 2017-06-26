@@ -3,8 +3,7 @@ package com.diff.endpoints;
 import java.nio.charset.StandardCharsets;
 
 import com.diff.controllers.Controller;
-import com.diff.json.DiffResult;
-import com.diff.util.Util;
+import com.diff.json.JSONDiffResult;
 
 import lef.server.annotations.Endpoint;
 import lef.server.annotations.FormParam;
@@ -14,15 +13,28 @@ import lef.server.exception.BadRequestException;
 
 /**
  * This endpoint class contains methods to receive two jsons and compare them.
- * All methods are mapped to a different endpoint and thet are executed when the
- * endpoint is called. For example,
+ * All methods are mapped to a different endpoint and they are executed when the
+ * endpoint is called. For example, a post request to /v1/diff/12/left will execute 
+ * the setLeft() method, and all parameters passed to url are passed to method as well.
  * 
- * - A post request to /v1/diff/12/left will execute the setLeft() method, and
- * all arguments passed to url are passed to method as well.
+ * The setLeft method is annotated with @PAth that defines the endpoint path, this
+ * way it's possible to create a mapping between a method to a endpoint URL.
+ * So, /:ID/left is the url pattern where :ID is the
+ * variable defined in annotation parameter @PathParam.
  * 
- * The setLeft method is annotated with @PAth that defines the endpoint path
- * that it is connected to. So, /:ID/left is the url pattern where :ID is the
- * variable name defined in annotation parameter @PathParam.
+ * To clarify, given the following method.
+ * 
+ * 	@Path(name = "/:first_name/:last_name", method = Path.Method.POST)
+ *  public void setName(@PathParam("first_name") String first_name, @PathParam("last_name") String last_name) {...}
+ *
+ * Notice the method above is annotated with @Path and its attribute name contains the 
+ * value "/:first_name/:last_name".The annotated method setName has two parameters where both are 
+ * annotated with @PathParam where the values are the same used in @Path annotation.
+ * 
+ * So, when the url /Jose/Elias is called to the server, the method setName where the values 
+ * "Jose" is assotiated to first_name parameter because "jose" is the position defined by ":first_name"
+ * in the template mapping. The same happens with "Elias" and ":last_name"
+ * 
  * 
  * @author Elias
  *
@@ -33,7 +45,7 @@ public class DiffEndpoint {
 	Controller diffController = new Controller();
 
 	/**
-	 * Sets the left json.
+	 * Sets the left json data to be compared.
 	 * 
 	 * @param id
 	 *            The comparison identification.
@@ -78,8 +90,8 @@ public class DiffEndpoint {
 	 *         comparison.
 	 */
 	@Path(name = "/:id", method = Path.Method.GET)
-	public DiffResult getComparisonResult(@PathParam("id") String id) {
-		DiffResult result = diffController.compare(id);
+	public JSONDiffResult getComparisonResult(@PathParam("id") String id) {
+		JSONDiffResult result = diffController.compare(id);
 
 		return result;
 	}

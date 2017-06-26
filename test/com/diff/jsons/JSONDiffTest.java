@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import com.diff.json.DiffResult;
+import com.diff.json.JSONDiffResult;
 import com.diff.json.InvalidJsonFormatException;
 import com.diff.json.BinaryJSON;
 import com.diff.json.JSONDiff;
@@ -33,9 +33,9 @@ public class JSONDiffTest {
 		jsonDiff.setLeft(parsedJson1);
 		jsonDiff.setRight(parsedJson2);
 
-		DiffResult result = jsonDiff.compare();
+		JSONDiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.SIZE_EQUAL);
 	}
 	
 	/**
@@ -59,9 +59,9 @@ public class JSONDiffTest {
 		jsonDiff.setLeft(parsedJson1);
 		jsonDiff.setRight(parsedJson2);
 
-		DiffResult result = jsonDiff.compare();
+		JSONDiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL_WITH_DIFFERENT_CONTENT);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.SIZE_EQUAL_WITH_DIFFERENT_CONTENT);
 	}	
 
 	/**
@@ -86,9 +86,9 @@ public class JSONDiffTest {
 		jsonDiff.setLeft(parsedJson1);
 		jsonDiff.setRight(parsedJson2);
 
-		DiffResult result = jsonDiff.compare();
+		JSONDiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), DiffResult.Status.NOT_SIZE_EQUALS);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.NOT_SIZE_EQUAL);
 	}
 
 	/**
@@ -110,16 +110,16 @@ public class JSONDiffTest {
 		JSONDiff jsonDiff = new JSONDiff();
 		jsonDiff.setLeft(parsedJson1);
 
-		DiffResult result = jsonDiff.compare();
+		JSONDiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), DiffResult.Status.MISSING_RIGHT_SIDE);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_RIGHT_SIDE);
 
 		jsonDiff.setLeft(null);
 		jsonDiff.setRight(parsedJson2);
 
-		DiffResult result2 = jsonDiff.compare();
+		JSONDiffResult result2 = jsonDiff.compare();
 
-		assertEquals(result2.getStatus(), DiffResult.Status.MISSING_LEFT_SIDE);
+		assertEquals(result2.getStatus(), JSONDiffResult.Status.MISSING_LEFT_SIDE);
 
 	}
 

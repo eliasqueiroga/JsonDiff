@@ -8,7 +8,7 @@ import java.util.Random;
 import org.junit.Test;
 
 import com.diff.controllers.Controller;
-import com.diff.json.DiffResult;
+import com.diff.json.JSONDiffResult;
 import com.diff.json.InvalidJsonFormatException;
 import com.diff.json.JSONDiff;
 import com.diff.util.Util;
@@ -18,7 +18,7 @@ public class ControllerTest {
 	
 	/**
 	 * Testing if the controller class is able to compare two equal json
-	 * structures.
+	 * with the same size but different content.
 	 */
 	@Test
 	public void compareSizeEqualButDifferentContentJsonTest() {
@@ -33,9 +33,9 @@ public class ControllerTest {
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json format");
 		}
-		DiffResult result = controller.compare(diffID);
+		JSONDiffResult result = controller.compare(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL_WITH_DIFFERENT_CONTENT);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.SIZE_EQUAL_WITH_DIFFERENT_CONTENT);
 	}	
 
 	/**
@@ -55,9 +55,9 @@ public class ControllerTest {
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json format");
 		}
-		DiffResult result = controller.compare(diffID);
+		JSONDiffResult result = controller.compare(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.SIZE_EQUAL);
 	}
 
 	/**
@@ -77,9 +77,9 @@ public class ControllerTest {
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json format");
 		}
-		DiffResult result = controller.compare(diffID);
+		JSONDiffResult result = controller.compare(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.NOT_SIZE_EQUALS);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.NOT_SIZE_EQUAL);
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class ControllerTest {
 
 		assertNotNull(diff);
 
-		DiffResult result = diff.compare();
+		JSONDiffResult result = diff.compare();
 
-		assertEquals(result.getStatus(), DiffResult.Status.MISSING_RIGHT_SIDE);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_RIGHT_SIDE);
 	}
 
 	/**
@@ -118,9 +118,9 @@ public class ControllerTest {
 
 		assertNotNull(diff);
 
-		DiffResult result = diff.compare();
+		JSONDiffResult result = diff.compare();
 
-		assertEquals(result.getStatus(), DiffResult.Status.MISSING_BOTH_SIDES);
+		assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_BOTH_SIDES);
 	}
 
 }

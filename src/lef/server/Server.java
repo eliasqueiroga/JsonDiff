@@ -25,6 +25,12 @@ import lef.server.info.EndpointMetaInfo;
 import spark.Request;
 import spark.ResponseTransformer;
 
+/**
+ * 
+ * 
+ * @author Elias
+ *
+ */
 public class Server {
 
 	private static String VERSION = "/v1";
@@ -36,10 +42,7 @@ public class Server {
 	private static Controller controller = new Controller();
 
 	/**
-	 * The method that starts the server. Three endpoints are available: -
-	 * /v1/diff/<id>/left : POST endpoint that received a json in base64 format
-	 * in request body - /v1/diff/<id>/right : POST endpoint that received a
-	 * json in base64 format in request body - /v1/diff/<id> :
+	 * 
 	 * 
 	 * @param args
 	 */
@@ -94,6 +97,11 @@ public class Server {
 
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
 	private static EndpointMetaInfo getEndpointMetaInfo(Request request) {
 		String endpoint = request.params("endpoint");
 		String path1 = request.params("path1");

@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.diff.JsonUtil;
-import com.diff.json.DiffResult;
+import com.diff.json.JSONDiffResult;
 
 import lef.server.exception.BadRequestException;
 
@@ -25,11 +25,11 @@ public class EnpointTest {
 			client.setLeft(id, jsons[0]);
 			client.setright(id, jsons[1]);
 		
-			DiffResult result = client.getComparisonResult(id);
+			JSONDiffResult result = client.getComparisonResult(id);
 			
 			Assert.assertNotNull(result);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
+			Assert.assertEquals(result.getStatus(), JSONDiffResult.Status.SIZE_EQUAL);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -48,11 +48,11 @@ public class EnpointTest {
 			client.setLeft(id, jsons[0]);
 			client.setright(id, jsons[1]);
 		
-			DiffResult result = client.getComparisonResult(id);
+			JSONDiffResult result = client.getComparisonResult(id);
 			
 			Assert.assertNotNull(result);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.NOT_SIZE_EQUALS);
+			Assert.assertEquals(result.getStatus(), JSONDiffResult.Status.NOT_SIZE_EQUAL);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -70,11 +70,11 @@ public class EnpointTest {
 		try {
 			client.setLeft(id, jsons[0]);
 		
-			DiffResult result = client.getComparisonResult(id);
+			JSONDiffResult result = client.getComparisonResult(id);
 			
 			Assert.assertNotNull(result);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.MISSING_RIGHT_SIDE);
+			Assert.assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_RIGHT_SIDE);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -89,11 +89,11 @@ public class EnpointTest {
 		String id = "ID_" + new Random().nextLong();
 		try {
 		
-			DiffResult result = client.getComparisonResult(id);
+			JSONDiffResult result = client.getComparisonResult(id);
 			
 			Assert.assertNotNull(result);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.MISSING_BOTH_SIDES);
+			Assert.assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_BOTH_SIDES);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -111,23 +111,23 @@ public class EnpointTest {
 		String[] jsons = JsonUtil.getJsons(true, true, true);
 		try {
 		
-			DiffResult result = client.getComparisonResult(id);
+			JSONDiffResult result = client.getComparisonResult(id);
 			
 			Assert.assertNotNull(result);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.MISSING_BOTH_SIDES);
+			Assert.assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_BOTH_SIDES);
 			
 			client.setLeft(id, jsons[0]);
 			
 			result = client.getComparisonResult(id);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.MISSING_RIGHT_SIDE);
+			Assert.assertEquals(result.getStatus(), JSONDiffResult.Status.MISSING_RIGHT_SIDE);
 			
 			client.setright(id, jsons[1]);
 			
 			result = client.getComparisonResult(id);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
+			Assert.assertEquals(result.getStatus(), JSONDiffResult.Status.SIZE_EQUAL);
 			
 		} catch (Exception e) {
 			Assert.fail();
@@ -145,7 +145,7 @@ public class EnpointTest {
 			client.setLeft(id, null);
 			client.setright(id, null);
 			
-			DiffResult result = client.getComparisonResult(id);
+			JSONDiffResult result = client.getComparisonResult(id);
 			
 			Assert.assertNotNull(result);
 		} catch (Exception e) {
@@ -170,7 +170,7 @@ public class EnpointTest {
 			client.setLeft(id, jsons[0]);
 			client.setright(id, jsons[1]);
 			
-			DiffResult result = client.getComparisonResult(id);
+			JSONDiffResult result = client.getComparisonResult(id);
 			
 			Assert.assertNotNull(result);
 		} catch (Exception e) {
@@ -194,7 +194,7 @@ public class EnpointTest {
 			client.setLeft(id, jsons[0]);
 			client.setright(id, jsons[1]);
 			
-			DiffResult result = client.getComparisonResult(id);
+			JSONDiffResult result = client.getComparisonResult(id);
 			
 			Assert.assertNotNull(result);
 		} catch (Exception e) {

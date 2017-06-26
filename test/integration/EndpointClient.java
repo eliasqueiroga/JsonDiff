@@ -19,7 +19,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.diff.endpoints.DiffEndpoint;
-import com.diff.json.DiffResult;
+import com.diff.json.JSONDiffResult;
 import com.google.gson.Gson;
 
 import lef.server.EndpointResult;
@@ -72,7 +72,7 @@ public class EndpointClient extends DiffEndpoint {
 	 * @see com.diff.endpoints.DiffEndpoint#getComparisonResult(java.lang.String)
 	 */
 	@Override
-	public DiffResult getComparisonResult(String id) {
+	public JSONDiffResult getComparisonResult(String id) {
 		String url = host + "/diff/" + id;
 		
 		Map<String, String> response = null;
@@ -85,7 +85,7 @@ public class EndpointClient extends DiffEndpoint {
 		Gson gson = new Gson();
 		EndpointResult endpointResult = gson.fromJson(response.get("content"), EndpointResult.class);
 		
-		DiffResult result = gson.fromJson(endpointResult.getContent().toString().replace("=", "='").replace(",", "',").replace("}", "'}"), DiffResult.class);
+		JSONDiffResult result = gson.fromJson(endpointResult.getContent().toString().replace("=", "='").replace(",", "',").replace("}", "'}"), JSONDiffResult.class);
 		return result;
 	}
 

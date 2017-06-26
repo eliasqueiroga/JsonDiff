@@ -1,6 +1,6 @@
 package com.diff.controllers;
 
-import com.diff.json.DiffResult;
+import com.diff.json.JSONDiffResult;
 import com.diff.json.InvalidJsonFormatException;
 import com.diff.json.BinaryJSON;
 import com.diff.json.JSONDiff;
@@ -45,24 +45,46 @@ public class Controller {
 		return jsonDiff;
 	}
 	
+	/**
+	 * Sets the left json data to be compared
+	 * 
+	 * @param diffID The comparison ID
+	 * @param jsonBase64 The json in base64 format
+	 * @throws InvalidJsonFormatException
+	 */
 	public void setLeftSide(String diffID, byte[] jsonBase64) throws InvalidJsonFormatException{
 		JSONDiff jsonDiff = getJsonDiff(diffID); 
 		
 		jsonDiff.setLeft(new BinaryJSON(jsonBase64));
 	}
 	
+	/**
+	 * Sets the left json data to be compared
+	 * 
+	 * @param diffID The comparison ID
+	 * @param jsonBase64 The json in base64 format
+	 * @throws InvalidJsonFormatException
+	 */
 	public void setRightSide(String diffID, byte[] jsonBase64) throws InvalidJsonFormatException{
 		JSONDiff jsonDiff = getJsonDiff(diffID); 
 		
 		jsonDiff.setRight(new BinaryJSON(jsonBase64));
 	}
 	
-	public DiffResult compare(String diffID){
+	/**
+	 * Gets the JsonDiff from memory storage by using the diff ID
+	 * and compare them. As result, it returns an instance of DiffResult
+	 * that gives more details of comparison.
+	 * 
+	 * @param diffID
+	 * @return
+	 */
+	public JSONDiffResult compare(String diffID){
 		if (cacheService.has(diffID)){
 			JSONDiff jsonDiff = getJsonDiff(diffID);
 			return jsonDiff.compare();
 		}else{
-			return new DiffResult(DiffResult.Status.MISSING_BOTH_SIDES, null);
+			return new JSONDiffResult(JSONDiffResult.Status.MISSING_BOTH_SIDES, null);
 		}
 	}
 
