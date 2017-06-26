@@ -38,7 +38,7 @@ public class EndpointTest {
 
 		DiffResult result = endpoint.getComparisonResult(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.EQUALS);
+		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class EndpointTest {
 
 		DiffResult result = endpoint.getComparisonResult(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.NOT_EQUALS);
+		assertEquals(result.getStatus(), DiffResult.Status.NOT_SIZE_EQUALS);
 	}
 
 	/**

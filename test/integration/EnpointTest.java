@@ -29,7 +29,7 @@ public class EnpointTest {
 			
 			Assert.assertNotNull(result);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.EQUALS);
+			Assert.assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -52,7 +52,7 @@ public class EnpointTest {
 			
 			Assert.assertNotNull(result);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.NOT_EQUALS);
+			Assert.assertEquals(result.getStatus(), DiffResult.Status.NOT_SIZE_EQUALS);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -127,7 +127,7 @@ public class EnpointTest {
 			
 			result = client.getComparisonResult(id);
 			
-			Assert.assertEquals(result.getStatus(), DiffResult.Status.EQUALS);
+			Assert.assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
 			
 		} catch (Exception e) {
 			Assert.fail();

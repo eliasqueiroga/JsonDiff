@@ -34,7 +34,7 @@ public class UtilTest {
 		
 		String encodedWord = Util.base64Encoder(word);
 		
-		String decodedWord = Util.base64Decoder(encodedWord);
+		String decodedWord = Util.base64Decoder(encodedWord.getBytes());
 		
 		Assert.assertNotNull(decodedWord);
 		
@@ -49,7 +49,7 @@ public class UtilTest {
 		String word = generateRandomString();
 		
 		try{
-			String decodedWord = Util.base64Decoder(word);	
+			String decodedWord = Util.base64Decoder(word.getBytes());	
 		}catch(Exception e){
 			Assert.assertTrue(e instanceof IllegalArgumentException);	
 		}

@@ -1,5 +1,7 @@
 package com.diff.endpoints;
 
+import java.nio.charset.StandardCharsets;
+
 import com.diff.controllers.Controller;
 import com.diff.json.DiffResult;
 import com.diff.util.Util;
@@ -42,18 +44,7 @@ public class DiffEndpoint {
 	@Path(name = "/:id/left", method = Path.Method.POST)
 	public void setLeft(@PathParam("id") String id, @FormParam("json") String json) throws Exception {
 		if (id != null) {
-			String decodedJSON = null;
-			try {
-				if (json != null) {
-					decodedJSON = Util.base64Decoder(json);
-				} else {
-					throw new BadRequestException("The json cannot be null");
-				}
-			} catch (Exception e) {
-				throw new BadRequestException("Invalid format");
-			}
-
-			diffController.setLeftSide(id, decodedJSON);
+			diffController.setLeftSide(id, json.getBytes(StandardCharsets.UTF_8));
 		} else {
 			throw new BadRequestException("The comparison ID must be informed");
 		}
@@ -71,17 +62,7 @@ public class DiffEndpoint {
 	@Path(name = "/:id/right", method = Path.Method.POST)
 	public void setright(@PathParam("id") String id, @FormParam("json") String json) throws Exception {
 		if (id != null) {
-			String decodedJSON = null;
-			try {
-				if (json != null) {
-					decodedJSON = Util.base64Decoder(json);
-				} else {
-					throw new BadRequestException("The json cannot be null");
-				}
-			} catch (Exception e) {
-				throw new BadRequestException("Invalid format");
-			}
-			diffController.setRightSide(id, decodedJSON);
+			diffController.setRightSide(id, json.getBytes(StandardCharsets.UTF_8));
 		} else {
 			throw new BadRequestException("The comparison ID must be informed");
 		}

@@ -2,6 +2,7 @@ package com.diff.controllers;
 
 import static org.junit.Assert.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 import org.junit.Test;
@@ -10,8 +11,32 @@ import com.diff.controllers.Controller;
 import com.diff.json.DiffResult;
 import com.diff.json.InvalidJsonFormatException;
 import com.diff.json.JSONDiff;
+import com.diff.util.Util;
 
 public class ControllerTest {
+	
+	
+	/**
+	 * Testing if the controller class is able to compare two equal json
+	 * structures.
+	 */
+	@Test
+	public void compareSizeEqualButDifferentContentJsonTest() {
+		Controller controller = new Controller();
+
+		String diffID = "ID1";
+		String leftJson = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'] }";
+		String rightJson = "{ 'field2' : 'Field2', 'field3' : ['a', 'b'] }";
+		try {
+			controller.setLeftSide(diffID, Util.base64Encoder(leftJson).getBytes(StandardCharsets.UTF_8));
+			controller.setRightSide(diffID, Util.base64Encoder(rightJson).getBytes(StandardCharsets.UTF_8));
+		} catch (InvalidJsonFormatException e) {
+			fail("Invalid json format");
+		}
+		DiffResult result = controller.compare(diffID);
+
+		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL_WITH_DIFFERENT_CONTENT);
+	}	
 
 	/**
 	 * Testing if the controller class is able to compare two equal json
@@ -25,14 +50,14 @@ public class ControllerTest {
 		String leftJson = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'] }";
 		String rightJson = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'] }";
 		try {
-			controller.setLeftSide(diffID, leftJson);
-			controller.setRightSide(diffID, rightJson);
+			controller.setLeftSide(diffID, Util.base64Encoder(leftJson).getBytes(StandardCharsets.UTF_8));
+			controller.setRightSide(diffID, Util.base64Encoder(rightJson).getBytes(StandardCharsets.UTF_8));
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json format");
 		}
 		DiffResult result = controller.compare(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.EQUALS);
+		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
 	}
 
 	/**
@@ -47,14 +72,14 @@ public class ControllerTest {
 		String leftJson = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'] }";
 		String rightJson = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'], 'field3' : false }";
 		try {
-			controller.setLeftSide(diffID, leftJson);
-			controller.setRightSide(diffID, rightJson);
+			controller.setLeftSide(diffID, Util.base64Encoder(leftJson).getBytes(StandardCharsets.UTF_8));
+			controller.setRightSide(diffID, Util.base64Encoder(rightJson).getBytes(StandardCharsets.UTF_8));
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json format");
 		}
 		DiffResult result = controller.compare(diffID);
 
-		assertEquals(result.getStatus(), DiffResult.Status.NOT_EQUALS);
+		assertEquals(result.getStatus(), DiffResult.Status.NOT_SIZE_EQUALS);
 	}
 
 	/**
@@ -68,7 +93,7 @@ public class ControllerTest {
 		String diffID = "ID_" + new Random().nextLong();
 		JSONDiff diff = controller.getJsonDiff(diffID);
 		try {
-			controller.setLeftSide(diffID, leftJson);
+			controller.setLeftSide(diffID, Util.base64Encoder(leftJson).getBytes(StandardCharsets.UTF_8));
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json format");
 		}

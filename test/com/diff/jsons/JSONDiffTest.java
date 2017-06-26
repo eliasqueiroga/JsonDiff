@@ -2,12 +2,15 @@ package com.diff.jsons;
 
 import static org.junit.Assert.*;
 
+import java.nio.charset.StandardCharsets;
+
 import org.junit.Test;
 
 import com.diff.json.DiffResult;
 import com.diff.json.InvalidJsonFormatException;
-import com.diff.json.JSON;
+import com.diff.json.BinaryJSON;
 import com.diff.json.JSONDiff;
+import com.diff.util.Util;
 
 public class JSONDiffTest {
 
@@ -17,11 +20,11 @@ public class JSONDiffTest {
 	@Test
 	public void compareEqualJsonsTest() {
 		String json = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'] }";
-		JSON parsedJson1 = null;
-		JSON parsedJson2 = null;
+		BinaryJSON parsedJson1 = null;
+		BinaryJSON parsedJson2 = null;
 		try {
-			parsedJson1 = JSON.parse(json);
-			parsedJson2 = JSON.parse(json);
+			parsedJson1 = new BinaryJSON(Util.base64Encoder(json).getBytes(StandardCharsets.UTF_8));
+			parsedJson2 = new BinaryJSON(Util.base64Encoder(json).getBytes(StandardCharsets.UTF_8));
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json");
 		}
@@ -32,8 +35,34 @@ public class JSONDiffTest {
 
 		DiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), DiffResult.Status.EQUALS);
+		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL);
 	}
+	
+	/**
+	 * Given two jsons with equal sizes, compare them and check they are equals.
+	 * However, they have a difference in their content.
+	 */
+	@Test
+	public void compareSuzeEqualDifferentContentJsonsTest() {
+		String json = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'] }";
+		String json2 = "{ 'field2' : 'Field1', 'field2' : ['G', 'D'] }";
+		BinaryJSON parsedJson1 = null;
+		BinaryJSON parsedJson2 = null;
+		try {
+			parsedJson1 = new BinaryJSON(Util.base64Encoder(json).getBytes(StandardCharsets.UTF_8));
+			parsedJson2 = new BinaryJSON(Util.base64Encoder(json2).getBytes(StandardCharsets.UTF_8));
+		} catch (InvalidJsonFormatException e) {
+			fail("Invalid json");
+		}
+
+		JSONDiff jsonDiff = new JSONDiff();
+		jsonDiff.setLeft(parsedJson1);
+		jsonDiff.setRight(parsedJson2);
+
+		DiffResult result = jsonDiff.compare();
+
+		assertEquals(result.getStatus(), DiffResult.Status.SIZE_EQUAL_WITH_DIFFERENT_CONTENT);
+	}	
 
 	/**
 	 * Given two different jsons, compare them and check they are not equals.
@@ -42,13 +71,13 @@ public class JSONDiffTest {
 	public void compareDifferentJsonsTest() {
 		String json = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'] }";
 		String json2 = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'], 'field3' : false }";
-		JSON parsedJson1 = null;
-		JSON parsedJson2 = null;
+		BinaryJSON parsedJson1 = null;
+		BinaryJSON parsedJson2 = null;
 
 		try {
-			parsedJson1 = JSON.parse(json);
+			parsedJson1 = new BinaryJSON(Util.base64Encoder(json).getBytes(StandardCharsets.UTF_8));
 
-			parsedJson2 = JSON.parse(json2);
+			parsedJson2 = new BinaryJSON(Util.base64Encoder(json2).getBytes(StandardCharsets.UTF_8));
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json");
 		}
@@ -59,7 +88,7 @@ public class JSONDiffTest {
 
 		DiffResult result = jsonDiff.compare();
 
-		assertEquals(result.getStatus(), DiffResult.Status.NOT_EQUALS);
+		assertEquals(result.getStatus(), DiffResult.Status.NOT_SIZE_EQUALS);
 	}
 
 	/**
@@ -69,11 +98,11 @@ public class JSONDiffTest {
 	public void tryCompareOneSideTest() {
 		String json = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'] }";
 		String json2 = "{ 'field1' : 'Field1', 'field2' : ['a', 'b'], 'field3' : false }";
-		JSON parsedJson1 = null;
-		JSON parsedJson2 = null;
+		BinaryJSON parsedJson1 = null;
+		BinaryJSON parsedJson2 = null;
 		try {
-			parsedJson1 = JSON.parse(json);
-			parsedJson2 = JSON.parse(json2);
+			parsedJson1 = new BinaryJSON(Util.base64Encoder(json).getBytes(StandardCharsets.UTF_8));
+			parsedJson2 = new BinaryJSON(Util.base64Encoder(json2).getBytes(StandardCharsets.UTF_8));
 		} catch (InvalidJsonFormatException e) {
 			fail("Invalid json");
 		}

@@ -1,19 +1,22 @@
 package com.diff.json;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JSONDiff {
 
-	private JSON left;
-	private JSON right;
-	
+	private BinaryJSON left;
+	private BinaryJSON right;
+
 	public JSONDiff() {
 
 	}
 
-	public void setLeft(JSON left) {
+	public void setLeft(BinaryJSON left) {
 		this.left = left;
 	}
 
-	public void setRight(JSON right) {
+	public void setRight(BinaryJSON right) {
 		this.right = right;
 	}
 
@@ -24,13 +27,32 @@ public class JSONDiff {
 			return new DiffResult(DiffResult.Status.MISSING_RIGHT_SIDE, null);
 		} else if (left == null && right != null) {
 			return new DiffResult(DiffResult.Status.MISSING_LEFT_SIDE, null);
-		}else {
+		} else {
 			Boolean isEqual = left.equals(right);
 
+			byte[] leftJsonBytes = left.getBytes();
+			byte[] rightJesonBytes = right.getBytes();
+
+			List<Integer> offsets = new ArrayList<Integer>();
+
 			if (isEqual) {
-				return new DiffResult(DiffResult.Status.EQUALS, null);
-			} else {
-				return new DiffResult(DiffResult.Status.NOT_EQUALS, "position 1");
+				for (int i = 0; i < leftJsonBytes.length; i++) {
+					if (!(new Byte(leftJsonBytes[i]).equals(new Byte(rightJesonBytes[i])))) {
+						offsets.add(i);
+					}
+				}
+				
+				DiffResult diffResult = null;
+				
+				if (offsets.size() > 0){
+					diffResult = new DiffResult(DiffResult.Status.SIZE_EQUAL_WITH_DIFFERENT_CONTENT, offsets);
+				}else{
+					diffResult = new DiffResult(DiffResult.Status.SIZE_EQUAL, null);
+				}
+				
+				return diffResult;				
+			}else{
+				return new DiffResult(DiffResult.Status.NOT_SIZE_EQUALS, null);
 			}
 		}
 	}

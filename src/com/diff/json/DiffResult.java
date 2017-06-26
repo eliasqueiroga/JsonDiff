@@ -1,13 +1,16 @@
 package com.diff.json;
 
+import java.util.List;
+
 public class DiffResult {
 	
 	private Status status;
-	private String detail;
+	private List<Integer> diffOffsets;
 	
 	public static enum Status {
-		EQUALS,
-		NOT_EQUALS,
+		SIZE_EQUAL,
+		SIZE_EQUAL_WITH_DIFFERENT_CONTENT,
+		NOT_SIZE_EQUALS,
 		MISSING_LEFT_SIDE,
 		MISSING_RIGHT_SIDE,
 		MISSING_BOTH_SIDES
@@ -18,9 +21,9 @@ public class DiffResult {
 	}
 	
 	
-	public DiffResult(Status status, String detail){
+	public DiffResult(Status status, List<Integer> diffOffsets){
 		this.status = status;
-		this.detail = detail;
+		this.diffOffsets = diffOffsets;
 	}
 	
 	public Status getStatus() {
@@ -31,12 +34,12 @@ public class DiffResult {
 		this.status = status;
 	}
 
-	public String getDetail() {
-		return detail;
+	public List<Integer> getDetail() {
+		return diffOffsets;
 	}
 
-	public void setDetail(String detail) {
-		this.detail = detail;
+	public void setDetail(List<Integer> diffOffsets) {
+		this.diffOffsets = diffOffsets;
 	}
 
 }
