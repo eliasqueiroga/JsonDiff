@@ -55,10 +55,10 @@ public class DiffEndpoint {
 	 */
 	@Path(name = "/:id/left", method = Path.Method.POST)
 	public void setLeft(@PathParam("id") String id, @FormParam("json") String json) throws Exception {
-		if (id != null) {
+		if (id != null && json != null) {
 			diffController.setLeftSide(id, json.getBytes(StandardCharsets.UTF_8));
 		} else {
-			throw new BadRequestException("The comparison ID must be informed");
+			throw new BadRequestException("One of parameters informed is not valid");
 		}
 	}
 
@@ -73,10 +73,10 @@ public class DiffEndpoint {
 	 */
 	@Path(name = "/:id/right", method = Path.Method.POST)
 	public void setright(@PathParam("id") String id, @FormParam("json") String json) throws Exception {
-		if (id != null) {
+		if (id != null && json != null) {
 			diffController.setRightSide(id, json.getBytes(StandardCharsets.UTF_8));
 		} else {
-			throw new BadRequestException("The comparison ID must be informed");
+			throw new BadRequestException("One of parameters informed is not valid");
 		}
 	}
 

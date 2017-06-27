@@ -94,6 +94,8 @@ public class Server {
 			res.status(400);
 			res.body(EndpointResult.ERROR(e.getMessage()).toString());
 		});
+		
+		System.out.println("Lef server running on http://localhost:8080/");
 
 	}
 

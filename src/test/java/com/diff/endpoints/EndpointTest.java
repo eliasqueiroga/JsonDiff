@@ -9,10 +9,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.diff.JsonUtil;
+import com.diff.json.InvalidJsonFormatException;
 import com.diff.json.JSONDiffResult;
-import com.diff.util.Util;
 
 import lef.server.exception.BadRequestException;
+import lef.server.exception.EndpointInternalException;
 
 public class EndpointTest {
 
@@ -117,8 +118,8 @@ public class EndpointTest {
 
 		try {
 			endpoint.setLeft(diffID, json);
-		} catch (Exception e) {
-			if (e instanceof BadRequestException) {
+		} catch (Exception e) {	
+			if (e instanceof InvalidJsonFormatException) {
 				Assert.assertTrue(true);
 			} else {
 				fail();

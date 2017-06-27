@@ -1,7 +1,6 @@
 package com.diff.jsons;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -86,7 +85,7 @@ public class JSONTest {
 		
 		assertNotNull(parsedJson2);
 		
-		assertNotEquals(parsedJson1, parsedJson2);
+		assertTrue(!parsedJson1.equals(parsedJson2));
 	}
 
 }

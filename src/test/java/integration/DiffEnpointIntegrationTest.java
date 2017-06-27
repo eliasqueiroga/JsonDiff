@@ -10,7 +10,7 @@ import com.diff.json.JSONDiffResult;
 
 import lef.server.exception.BadRequestException;
 
-public class EnpointTest {
+public class DiffEnpointIntegrationTest {
 
 	/**
 	 * Make a HTTP request informing left and right jsons to be compared.

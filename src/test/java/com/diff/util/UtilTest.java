@@ -22,7 +22,7 @@ public class UtilTest {
 		
 		Assert.assertNotNull(encodedWord);
 		
-		Assert.assertNotEquals(word, encodedWord);
+		Assert.assertTrue(!word.equals(encodedWord));
 	}
 	
 	/**
